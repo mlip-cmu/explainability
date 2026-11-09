@@ -1,0 +1,18 @@
+[project]
+name = "xai06-similarity-and-prototypes"
+version = "0.1.0"
+requires-python = ">=3.12"
+dependencies = [
+    "recidivism-data",
+    "scikit-learn>=1.6",
+    "matplotlib>=3.9",
+    "jupyter>=1.1",
+    "nbconvert>=7",
+    "kmedoids>=0.5",
+]
+
+[tool.uv]
+package = false
+
+[tool.uv.sources]
+recidivism-data = { path = "../recidivism-data", editable = true }
