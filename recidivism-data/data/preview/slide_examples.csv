@@ -1,0 +1,5 @@
+id,age,sex,priors_count,juvenile_priors,age_at_first_arrest,charge_degree,charge_type,employed,in_treatment,county,true_probability
+900001,18,male,1,0,17,misdemeanor,property,0,0,north,0.754
+900002,22,male,3,0,18,felony,drug,0,0,south,0.7564
+900003,35,female,5,0,22,felony,property,1,0,east,0.3846
+900004,40,male,0,0,40,misdemeanor,traffic,1,0,west,0.0786

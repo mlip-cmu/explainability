@@ -1,0 +1,7 @@
+.venv/
+__pycache__/
+*.parquet
+out/
+.ipynb_checkpoints/
+.pytest_cache/
+.ruff_cache/

@@ -1,0 +1,16 @@
+[project]
+name = "recidivism-data"
+version = "0.1.0"
+description = "Synthetic, deterministic recidivism data with a known true process"
+requires-python = ">=3.12"
+dependencies = ["numpy>=2.0", "pandas>=2.2", "pyarrow>=17", "matplotlib>=3.9", "scikit-learn>=1.6"]
+
+[dependency-groups]
+dev = ["pytest>=8"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["recidivism_data"]
