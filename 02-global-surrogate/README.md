@@ -24,19 +24,19 @@ r2_score(f_test, g.predict(A_test))
 
 `surrogate.py`:
 
-1. **Fidelity against size.** A tree with 8 leaves has R² = 0.56 and makes a different decision
-   than `f` for 17% of the people. With 256 leaves R² is 0.85, but that tree is not readable.
+1. **Fidelity against size.** A tree with 8 leaves has R² = 0.70 and makes a different decision
+   than `f` for 16% of the people. With 256 leaves R² is 0.95, but that tree is not readable.
 2. The surrogate with 8 leaves: a short description with `age_at_first_arrest`, `employed`,
-   `priors_count`, `male`, and `age`.
+   `priors_count`, and `age`.
 3. **What is missing.** For people with a drug charge, `f` gives a much lower risk to those
-   in treatment (0.29 against 0.47). The surrogate does not use this feature at all (0.39
-   against 0.40).
+   in treatment (0.30 against 0.45). The surrogate does not use this feature at all (0.39
+   against 0.39).
 4. **Not truthful.** A second model is trained *without* `age_at_first_arrest`. Its surrogate
    still splits on `age_at_first_arrest` first: the surrogate found a correlation in the data,
    not the mechanism of the model.
-5. **Random probe inputs** (when you do not have the training data): the surrogate fits the
-   probes (R² 0.59) but not real people (R² 0.02), because random inputs are mostly impossible
-   people.
+5. **Random probe inputs** (when you do not have the training data): the surrogate fits real
+   people less well (R² 0.45 in place of 0.70, a different decision for 23% of them) and has a
+   different first split (`age`), because random inputs are mostly impossible people.
 
 ## Tools
 

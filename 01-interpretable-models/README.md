@@ -3,9 +3,9 @@
 A court uses a model that predicts whether a defendant is rearrested within two years. The
 data is the synthetic `defendants` table of the [dataset package](../recidivism-data/).
 
-**Problem.** A gradient boosting model for this task has 150 trees with 9 150 nodes, a small
+**Problem.** A gradient boosting model for this task has 150 trees with 2 162 nodes, a small
 neural network has 3 649 weights. You can print all of them, and you still cannot tell why a
-24-year-old man with five priors gets a risk of 0.76, or whether the model is fair.
+24-year-old man with five priors gets a risk of 0.69, or whether the model is fair.
 
 **Idea.** Use a model that a person can read completely: a sparse linear model, a score card,
 a small decision tree, or a short rule list. Then the model is its own explanation, the
@@ -43,9 +43,9 @@ points = pd.Series(np.round(lasso.coef_[0] / 0.35).astype(int), index=C_train.co
   5. The prediction for an 18-year-old male with one prior, read from the rule list and the
      score card, with a counterfactual.
   6. **Accuracy.** No model can be better than the true process (0.682, the labels are noisy).
-     Logistic regression and the explainable boosting machine (0.675) are *better* than
-     gradient boosting (0.664); the score card is equal to it (0.662). The rule lists (0.646,
-     0.644) and the tree (0.636) lose 2 to 3 points.
+     Logistic regression and the explainable boosting machine are **as accurate as** gradient
+     boosting (all 0.675), and the sparse model with 10 features is at 0.674. The score card
+     (0.662), the rule lists (0.646, 0.644), and the tree (0.636) lose 1 to 4 points.
 - `stability.py`: the same tree learner on 6 samples of the training data gives 6 different
   trees, which agree on only 85% of the predictions on average. A logistic regression with all
   pairs of features has 120 terms, and a tree can have 2 822 leaves: "linear" and "tree" do not

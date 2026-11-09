@@ -10,11 +10,16 @@ from . import FEATURES, load, load_xy, onehot
 PERSON_ID = 1657
 
 
+def new_gbm() -> HistGradientBoostingClassifier:
+    return HistGradientBoostingClassifier(
+        max_iter=150, learning_rate=0.05, max_depth=3, min_samples_leaf=40, random_state=0
+    )
+
+
 def opaque_model(table: str = "defendants") -> Pipeline:
     """Gradient boosting on the encoded features. `model[-1]` is the boosting model itself."""
     X, y = load_xy("train", table)
-    gbm = HistGradientBoostingClassifier(max_iter=150, learning_rate=0.06, random_state=0)
-    return make_pipeline(FunctionTransformer(onehot), gbm).fit(X, y)
+    return make_pipeline(FunctionTransformer(onehot), new_gbm()).fit(X, y)
 
 
 def person(person_id: int | None = None) -> pd.DataFrame:

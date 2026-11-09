@@ -3,8 +3,7 @@
 import numpy as np
 import pandas as pd
 from recidivism_data import load_xy, onehot
-from recidivism_data.shared import opaque_model
-from sklearn.ensemble import HistGradientBoostingClassifier
+from recidivism_data.shared import new_gbm, opaque_model
 from sklearn.metrics import r2_score
 from sklearn.tree import DecisionTreeRegressor, export_text
 
@@ -50,8 +49,7 @@ print(f"   the surrogate uses only: {', '.join(used)}")
 
 print("\n4. The surrogate can use a feature that the model cannot see")
 blind = [n for n in names if n != "age_at_first_arrest"]
-f2 = HistGradientBoostingClassifier(max_iter=150, learning_rate=0.06, random_state=0)
-f2.fit(A_train[blind], y_train)
+f2 = new_gbm().fit(A_train[blind], y_train)
 g2 = DecisionTreeRegressor(max_leaf_nodes=8, random_state=0)
 g2.fit(A_train, f2.predict_proba(A_train[blind])[:, 1])
 r2, _ = fidelity(g2, target=f2.predict_proba(A_test[blind])[:, 1])
