@@ -4,7 +4,6 @@
 #   ./run_all.sh 04-lime-and-shap     one folder
 set -euo pipefail
 cd "$(dirname "$0")"
-export MPLBACKEND=Agg
 
 folders=("$@")
 if [ ${#folders[@]} -eq 0 ]; then
