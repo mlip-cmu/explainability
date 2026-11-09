@@ -1,0 +1,41 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+      - run: uvx ruff@0.17.4 check .
+      - run: uvx ruff@0.17.4 format --check .
+
+  data:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+      - run: ./run_all.sh recidivism-data
+      - name: The committed CSV files are the generated ones
+        run: git diff --exit-code -- recidivism-data/data
+
+  demos:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        project:
+          - 01-interpretable-models
+          - 02-global-surrogate
+          - 03-importance-and-pdp
+          - 04-lime-and-shap
+          - 05-counterfactuals
+          - 06-similarity-and-prototypes
+          - 07-influential-instances
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+      - run: ./run_all.sh ${{ matrix.project }}
