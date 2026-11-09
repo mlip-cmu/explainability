@@ -18,7 +18,7 @@ URL = "https://raw.githubusercontent.com/propublica/compas-analysis/master/compa
 
 try:
     raw = pd.read_csv(StringIO(requests.get(URL, timeout=30).text))
-except Exception as error:
+except (requests.RequestException, pd.errors.ParserError) as error:
     print(f"no download possible ({type(error).__name__}); this script needs the network")
     sys.exit(0)
 
