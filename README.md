@@ -54,8 +54,8 @@ version of the model with only the age as a feature, so that the whole model is 
 
 | Figure | Where |
 |---|---|
-| Linear model with interaction terms (real COMPAS data) | [`01-interpretable-models/compas_real.py`](01-interpretable-models/compas_real.py) |
-| Global surrogate: a line through 8 predictions of the model | [`02-global-surrogate/illustration.ipynb`](02-global-surrogate/illustration.ipynb) |
+| Linear model with interaction terms (real COMPAS data) | [`01-interpretable-models/interpretable_models.ipynb`](01-interpretable-models/interpretable_models.ipynb) |
+| Global surrogate: a line through 8 predictions of the model | [`02-global-surrogate/global_surrogate.ipynb`](02-global-surrogate/global_surrogate.ipynb) |
 | Permutation importance: two tables, one column shuffled (real COMPAS data) | [`03-importance-and-pdp/importance_and_pdp.ipynb`](03-importance-and-pdp/importance_and_pdp.ipynb) |
 | One person with different ages: one line of a partial dependence plot | [`03-importance-and-pdp/importance_and_pdp.ipynb`](03-importance-and-pdp/importance_and_pdp.ipynb) |
 | Global surrogate against local surrogates | [`04-lime-and-shap/lime_and_shap.ipynb`](04-lime-and-shap/lime_and_shap.ipynb) |
@@ -92,8 +92,8 @@ You need [uv](https://docs.astral.sh/uv/). Each folder is a separate uv project 
 locked dependencies; the first run installs them.
 
 ```sh
-cd 01-interpretable-models
-uv run interpretable.py
+cd 05-counterfactuals
+uv run counterfactuals.py
 ```
 
 ```sh
