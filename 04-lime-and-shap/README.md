@@ -38,19 +38,22 @@ total = shap_one.base_values + shap_one.values.sum()
 Open [`lime_and_shap.ipynb`](lime_and_shap.ipynb) on GitHub to see the outputs.
 
 - `lime_and_shap.ipynb`:
-  1. LIME by hand: the surface of the opaque model, the weighted samples, and the local plane
+  1. The idea in one picture, for a model with only the age as a feature: one global
+     surrogate line and three local lines. The effect of 10 more years is −0.30 for a
+     22-year-old, −0.04 for a 40-year-old, and +0.03 for a 59-year-old.
+  2. LIME by hand: the surface of the opaque model, the weighted samples, and the local plane
      (−0.016 per year of age, +0.044 per prior). The plane is right near the person and wrong
      far away.
-  2. LIME with the library: a short explanation with ranges (`priors_count > 3`,
+  3. LIME with the library: a short explanation with ranges (`priors_count > 3`,
      `age <= 25`, `employed=0`). The local model has R² = 0.65 and predicts 0.73 where the
      opaque model says 0.69.
-  3. SHAP waterfall and force plot: average log-odds −0.49 plus the SHAP values (+1.29) is the
+  4. SHAP waterfall and force plot: average log-odds −0.49 plus the SHAP values (+1.29) is the
      log-odds of the model (+0.80, P = 0.69). All features get a value.
-  4. **SHAP against the truth.** The model gives +0.27 to `age_at_first_arrest`, which has no
+  5. **SHAP against the truth.** The model gives +0.27 to `age_at_first_arrest`, which has no
      effect in the true process, and too little to `priors_count` (+0.33, truth +0.65) and
      `age` (+0.15, truth +0.43). SHAP describes the model faithfully; it does not describe
      the world.
-  5. SHAP for 1 500 people: beeswarm and dependence plots (explanations of single predictions
+  6. SHAP for 1 500 people: beeswarm and dependence plots (explanations of single predictions
      put together to explain the model), and the ranking for two people against the global one.
 - `lime_stability.py`: the same prediction explained 20 times.
   - With the default 5 000 samples the same five features are always there; the values change

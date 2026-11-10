@@ -36,7 +36,16 @@ approx_theta = np.linalg.solve(hessian, gradients.T).T  # removing row i changes
 
 ## What the code shows
 
-`influence.py`:
+[`illustration.ipynb`](illustration.ipynb) shows the idea in two pictures, for models with
+only the age as a feature:
+
+- One added person (85 years old, rearrested) changes boosted trees: the risk at age 85 is 0.96
+  with the person and 0.15 without. This works only because the person is alone in that region
+  and a leaf may hold one person; with at least 40 people in a leaf the change is 0.13 to 0.15.
+- One wrong record (a 25-year-old entered as 125) changes a linear model from
+  0.63 − 0.0070 · age to 0.45 − 0.0027 · age.
+
+`influence.py`, for a model with all features:
 
 1. The model with the 60 errors against the model on corrected data (see the problem above).
 2. Leave one out: 1 500 models, about 40 seconds.
@@ -59,6 +68,8 @@ approx_theta = np.linalg.solve(hessian, gradients.T).T  # removing row i changes
 - [scikit-learn](https://scikit-learn.org): logistic regression, with `warm_start` so that each
   leave-one-out model starts from the complete model.
 - [NumPy](https://numpy.org): the influence function (gradients, Hessian, one linear solve).
+- [Matplotlib](https://matplotlib.org) and [Jupyter](https://jupyter.org): the charts and the
+  notebook.
 
 ## Run
 
@@ -66,4 +77,5 @@ With [uv](https://docs.astral.sh/uv/):
 
 ```sh
 uv run influence.py   # about 40 seconds
+uv run jupyter nbconvert --to notebook --execute --inplace illustration.ipynb
 ```

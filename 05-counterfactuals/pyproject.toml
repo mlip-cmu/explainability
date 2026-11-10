@@ -6,6 +6,9 @@ dependencies = [
     "recidivism-data",
     "scikit-learn>=1.6",
     "dice-ml>=0.12",
+    "matplotlib>=3.9",
+    "jupyter>=1.1",
+    "nbconvert>=7",
 ]
 
 [tool.uv]

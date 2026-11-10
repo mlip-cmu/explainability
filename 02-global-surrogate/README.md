@@ -22,7 +22,12 @@ r2_score(f_test, g.predict(A_test))
 
 ## What the code shows
 
-`surrogate.py`:
+[`illustration.ipynb`](illustration.ipynb) shows the idea in pictures. For a model with only
+the age as a feature, the model is one curve; a linear regression on 8 predictions of the model
+is the surrogate (risk = 0.70 − 0.009 · age, R² = 0.72). For a model with age and priors, a
+tree with 6 leaves replaces the surface of the model with 6 rectangles (R² = 0.78).
+
+`surrogate.py`, for the model with all features:
 
 1. **Fidelity against size.** A tree with 8 leaves has R² = 0.70 and makes a different decision
    than `f` for 16% of the people. With 256 leaves R² is 0.95, but that tree is not readable.
@@ -43,6 +48,8 @@ r2_score(f_test, g.predict(A_test))
 - [scikit-learn](https://scikit-learn.org): the standard machine-learning library for Python.
   Here: the opaque model (`HistGradientBoostingClassifier`), the surrogate
   (`DecisionTreeRegressor`), `export_text`, and `r2_score`.
+- [Matplotlib](https://matplotlib.org) and [Jupyter](https://jupyter.org): the charts and the
+  notebook.
 
 ## Run
 
@@ -50,4 +57,5 @@ With [uv](https://docs.astral.sh/uv/):
 
 ```sh
 uv run surrogate.py
+uv run jupyter nbconvert --to notebook --execute --inplace illustration.ipynb
 ```

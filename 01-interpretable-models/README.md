@@ -53,6 +53,9 @@ points = pd.Series(np.round(lasso.coef_[0] / 0.35).astype(int), index=C_train.co
 - `compas_real.py`: the same comparison on the 7 214 real records from Broward County that
   ProPublica published. Gradient boosting 0.677, logistic regression with 6 features 0.676, a
   tree with 6 leaves 0.674, the three-rule list 0.664, the proprietary COMPAS score 0.654.
+  The script also fits a logistic regression with all pairs of features: 21 terms such as
+  `-0.0031 * age * priors`, accuracy 0.668. It is linear, less accurate than the plain model,
+  and nobody can read the effect of one more prior from it.
 
 ## Tools
 
@@ -71,5 +74,5 @@ With [uv](https://docs.astral.sh/uv/):
 uv run opaque.py          # parameters of opaque models
 uv run interpretable.py   # sparse model, score card, tree, rule lists, accuracy table
 uv run stability.py       # unstable trees, big linear models, big trees
-uv run compas_real.py     # the comparison on the real COMPAS data (needs the network)
+uv run compas_real.py     # the comparison and the big linear model on real COMPAS data (needs the network)
 ```

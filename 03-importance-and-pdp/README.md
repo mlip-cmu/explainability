@@ -37,13 +37,17 @@ Open [`importance_and_pdp.ipynb`](importance_and_pdp.ipynb) on GitHub to see the
 1. **Importance.** Shuffling `priors_count` decreases the accuracy from 0.675 to 0.639;
    shuffling `county` changes nothing. The most important features are `age` (0.031) and
    `priors_count` (0.027).
+   The same is shown as a table on the real COMPAS data: six validation rows before and after
+   the column `priors` is shuffled; the accuracy decreases from 69.2% to 55.4%.
 2. **Importance is about the model, not about the world.** The third feature of the model is
    `age_at_first_arrest` (0.017). In the true process, which the notebook measures in the same
    way, its importance is 0: it is only correlated with age and priors.
 3. **Correlated features.** Shuffling `age` costs 0.031, but a model retrained without `age`
    loses only 0.014, because other features take its place. Without `age_at_first_arrest` the
    retrained model is even a little better (+0.005).
-4. **Partial dependence.** The curve of one person, the curves of 60 people, and their average.
+4. **Partial dependence.** The curve of one person (also as a table of eight copies of the
+   person with different ages), the curves of three people, the curves of 60 people, and
+   their average.
    The risk decreases quickly from age 18 to 30. The model's curve starts lower than the true
    curve (0.53 against 0.70 at age 18), because the model gives a part of the age effect to
    `age_at_first_arrest`.
@@ -58,6 +62,8 @@ Open [`importance_and_pdp.ipynb`](importance_and_pdp.ipynb) on GitHub to see the
 - [scikit-learn](https://scikit-learn.org): the standard machine-learning library for Python.
   Here: `permutation_importance` and `PartialDependenceDisplay` from `sklearn.inspection`.
 - [Matplotlib](https://matplotlib.org): the standard plotting library. Here: all charts.
+- [Requests](https://requests.readthedocs.io): an HTTP library. Here: the download of the COMPAS
+  data for the table (that cell needs the network).
 - [Jupyter](https://jupyter.org): notebooks with code, text, and outputs in one file.
 
 ## Run

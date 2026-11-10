@@ -2595,6 +2595,7 @@ dependencies = [
     { name = "matplotlib" },
     { name = "nbconvert" },
     { name = "recidivism-data" },
+    { name = "requests" },
     { name = "scikit-learn" },
 ]
 
@@ -2604,5 +2605,6 @@ requires-dist = [
     { name = "matplotlib", specifier = ">=3.9" },
     { name = "nbconvert", specifier = ">=7" },
     { name = "recidivism-data", editable = "../recidivism-data" },
+    { name = "requests", specifier = ">=2.34.2" },
     { name = "scikit-learn", specifier = ">=1.6" },
 ]

@@ -38,6 +38,10 @@ result = genetic.generate_counterfactuals(
 
 ## What the code shows
 
+- [`illustration.ipynb`](illustration.ipynb): both ideas in one picture each, for a model with
+  only the age as a feature. The anchor for a 22-year-old is the region `age <= 23` (precision
+  100%, coverage 16%); the wider region `age <= 27` has a precision of only 45%. The
+  counterfactual for a 20-year-old is the age 24, and for a 40-year-old the age 23.
 - `anchors.py`: a greedy search adds one fact at a time. The anchor is `priors_count >= 4 AND
   age <= 25 AND age_at_first_arrest <= 17 AND employed = 0`: 97% of such people get the same
   prediction (precision), and the rule applies to 2.7% of all people (coverage). The charge,
@@ -61,6 +65,8 @@ result = genetic.generate_counterfactuals(
   counterfactual explanations for any model. Here: the `random` and `genetic` search, with
   `features_to_vary` and `permitted_range` as constraints.
 - [scikit-learn](https://scikit-learn.org): the opaque model.
+- [Matplotlib](https://matplotlib.org) and [Jupyter](https://jupyter.org): the charts and the
+  notebook.
 - `anchors.py` is a small implementation of the idea of
   [Anchors](https://homes.cs.washington.edu/~marcotcr/aaai18.pdf). Libraries with the complete
   algorithm are [alibi](https://github.com/SeldonIO/alibi) and
@@ -73,4 +79,5 @@ With [uv](https://docs.astral.sh/uv/):
 ```sh
 uv run anchors.py           # sufficient conditions
 uv run counterfactuals.py   # search by hand, DiCE, actionable constraints
+uv run jupyter nbconvert --to notebook --execute --inplace illustration.ipynb
 ```

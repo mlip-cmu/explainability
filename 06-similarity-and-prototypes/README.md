@@ -34,7 +34,9 @@ the outputs.
    feature has the same weight in the distance. Without the two features that are not causes,
    the rate is 76%, and only 6 of the 25 people are the same.
 2. **Prototypes.** Six real people represent 3 000: five are about 30 years old with one prior,
-   one stands for the people with more priors (61% of that group were rearrested).
+   one stands for the people with more priors (61% of that group were rearrested). A plot over
+   age and number of priors shows five prototypes and five criticisms; the largest prototype
+   (age 25, one prior) stands for 36% of the people.
 3. **Criticisms find data errors.** In the dirty data, all 14 sampled rows with an impossible
    value (`priors_count` of 91, `age` of 134) are among the 20 criticisms. Of the 7 rows with
    only a flipped label, none is: criticisms look at features, not at labels.

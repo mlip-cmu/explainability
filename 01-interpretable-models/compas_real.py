@@ -1,6 +1,8 @@
 """The same comparison on real data: the COMPAS records that ProPublica published."""
 
 import sys
+import textwrap
+import warnings
 from io import StringIO
 
 import numpy as np
@@ -11,9 +13,10 @@ from sklearn.ensemble import HistGradientBoostingClassifier
 from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import cross_val_predict
 from sklearn.pipeline import make_pipeline
-from sklearn.preprocessing import StandardScaler
+from sklearn.preprocessing import PolynomialFeatures, StandardScaler
 from sklearn.tree import DecisionTreeClassifier
 
+warnings.filterwarnings("ignore")
 URL = "https://raw.githubusercontent.com/propublica/compas-analysis/master/compas-scores-two-years.csv"
 
 try:
@@ -55,3 +58,32 @@ rows.append(("COMPAS score (medium or high)", np.mean(compas == y)))
 print("accuracy (10-fold cross-validation for the learned models):")
 for name, accuracy in sorted(rows, key=lambda r: -r[1]):
     print(f"   {name:<42}{accuracy:.3f}")
+
+print("\nA linear model is not interpretable only because it is linear:")
+P = pd.DataFrame(
+    {
+        "age": raw["age"],
+        "male": X["male"],
+        "priors": raw["priors_count"],
+        "juvFelonies": raw["juv_fel_count"],
+        "juvMisdemeanors": raw["juv_misd_count"],
+        "juvOther": raw["juv_other_count"],
+        "felony": X["felony"],
+        "daysInJail": X["days_in_jail"],
+    }
+)
+pairs = PolynomialFeatures(2, interaction_only=True, include_bias=False)
+products = pairs.fit_transform(P)
+terms = [name.replace(" ", " * ") for name in pairs.get_feature_names_out(P.columns)]
+P2 = pd.DataFrame(products, columns=terms)
+sparse = LogisticRegression(penalty="l1", solver="liblinear", C=0.02, max_iter=5000)
+accuracy = np.mean(cross_val_predict(sparse, P2, y, cv=10) == y)
+weights = pd.Series(sparse.fit(P2, y).coef_[0], index=terms)
+weights = weights[weights != 0]
+print(
+    f"logistic regression with all pairs of features and an L1 penalty: {len(weights)} of {len(terms)} terms,"
+)
+print(f"accuracy {accuracy:.3f}. The log-odds of a rearrest are:")
+formula = " + ".join(f"{float(f'{w:.2g}'):g} * {name}" for name, w in weights.items())
+print(textwrap.fill(formula, 96, initial_indent="   ", subsequent_indent="   "))
+print("   What is the effect of one more prior? It depends on six other features.")
