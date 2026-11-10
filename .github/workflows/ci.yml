@@ -39,4 +39,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: astral-sh/setup-uv@v6
+      - name: Cache the language model of project 08
+        if: matrix.project == '08-context-attribution'
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/huggingface
+          key: huggingface-${{ hashFiles('08-context-attribution/context_attribution.py') }}
       - run: ./run_all.sh ${{ matrix.project }}
+        env:
+          PYTHONUNBUFFERED: "1"

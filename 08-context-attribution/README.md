@@ -36,7 +36,8 @@ surrogate = Lasso(alpha=0.25).fit(masks.astype(float), scores)
 
 ## What the code shows
 
-`context_attribution.py`:
+`context_attribution.py` (the numbers are from one machine; on a different processor the small
+model can give slightly different words and weights):
 
 1. The report, the question "Did the defendant miss court dates in the past?", and the answer
    of the model: yes, "he had missed three hearings last year".
