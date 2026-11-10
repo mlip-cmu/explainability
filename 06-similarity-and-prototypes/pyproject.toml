@@ -9,6 +9,7 @@ dependencies = [
     "jupyter>=1.1",
     "nbconvert>=7",
     "kmedoids>=0.5",
+    "requests>=2.34.2",
 ]
 
 [tool.uv]

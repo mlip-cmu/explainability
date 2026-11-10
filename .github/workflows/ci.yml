@@ -35,6 +35,7 @@ jobs:
           - 05-counterfactuals
           - 06-similarity-and-prototypes
           - 07-influential-instances
+          - 08-context-attribution
     steps:
       - uses: actions/checkout@v4
       - uses: astral-sh/setup-uv@v6

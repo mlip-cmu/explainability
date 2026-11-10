@@ -16,7 +16,7 @@ judges, defendants, auditors, and the developers of the model all have questions
 - Why did *this* defendant get a high risk? What must be different for another result?
 - Which training data made the model the way it is?
 
-All projects use the same [synthetic dataset](recidivism-data/) of 12 000 defendants. No real
+Projects 01 to 07 use the same [synthetic dataset](recidivism-data/) of 12 000 defendants. No real
 person is in it, and **the process that makes the labels is known**. Thus the projects can
 compare each explanation with the truth. Two features (`age_at_first_arrest`, `county`) are
 correlated with the causes of a rearrest but are no causes; they show where explanations of a
@@ -37,14 +37,31 @@ of 0.69.
 | 05 | [Anchors and counterfactuals](05-counterfactuals/) | Which facts are enough for the prediction? What must change for a different one? | Explaining a prediction: anchors, counterfactual explanations, actionable counterfactuals |
 | 06 | [Similar cases, prototypes, criticisms](06-similarity-and-prototypes/) | Which past cases are like this one? Which few people represent the data, and which do not fit? | Explaining a prediction: similarity; understanding the data: prototypes and criticisms |
 | 07 | [Influential instances](07-influential-instances/) | Which training rows changed the model most? | Understanding the data: influential instances |
+| 08 | [Context attribution for LLM answers](08-context-attribution/) | Which sentences of the context did an LLM answer depend on? | Explaining a prediction: context attribution for RAG |
 
 ```mermaid
 flowchart LR
     data[(Training data)] --> train[Training] --> model[Model] --> pred[Prediction for one person]
     data -.- d1["06 prototypes and criticisms<br/>07 influential instances"]
     model -.- m1["01 interpretable models<br/>02 global surrogate<br/>03 feature importance, partial dependence"]
-    pred -.- p1["04 LIME, SHAP<br/>05 anchors, counterfactuals<br/>06 similar cases"]
+    pred -.- p1["04 LIME, SHAP<br/>05 anchors, counterfactuals<br/>06 similar cases<br/>08 context attribution (LLM)"]
 ```
+
+## The figures of the lecture
+
+The plots and tables that the lecture shows are made in the notebooks. Most of them use a
+version of the model with only the age as a feature, so that the whole model is one curve.
+
+| Figure | Where |
+|---|---|
+| Linear model with interaction terms (real COMPAS data) | [`01-interpretable-models/compas_real.py`](01-interpretable-models/compas_real.py) |
+| Global surrogate: a line through 8 predictions of the model | [`02-global-surrogate/illustration.ipynb`](02-global-surrogate/illustration.ipynb) |
+| Permutation importance: two tables, one column shuffled (real COMPAS data) | [`03-importance-and-pdp/importance_and_pdp.ipynb`](03-importance-and-pdp/importance_and_pdp.ipynb) |
+| One person with different ages: one line of a partial dependence plot | [`03-importance-and-pdp/importance_and_pdp.ipynb`](03-importance-and-pdp/importance_and_pdp.ipynb) |
+| Global surrogate against local surrogates | [`04-lime-and-shap/lime_and_shap.ipynb`](04-lime-and-shap/lime_and_shap.ipynb) |
+| Anchors; counterfactuals with one feature | [`05-counterfactuals/illustration.ipynb`](05-counterfactuals/illustration.ipynb) |
+| Prototypes and criticisms over age and priors | [`06-similarity-and-prototypes/similarity_and_prototypes.ipynb`](06-similarity-and-prototypes/similarity_and_prototypes.ipynb) |
+| Influential instance: one added person | [`07-influential-instances/illustration.ipynb`](07-influential-instances/illustration.ipynb) |
 
 Three terms that are easy to confuse:
 
@@ -64,6 +81,10 @@ Three terms that are easy to confuse:
 - Criticisms find all rows with impossible values but no flipped label (06).
 - Leave-one-out influence does not find 20 bad rows that have the same error, because they
   hide each other (07).
+- The real COMPAS data has a processing error that a table by quarter shows at once: the
+  rearrest rate is 36.2%, not 45.1% (06).
+- An LLM answers from an unverified sentence in its context and cites a different sentence as
+  its source; context attribution finds the right one (08).
 
 ## How to run
 
