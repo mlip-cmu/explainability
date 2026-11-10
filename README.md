@@ -3,8 +3,8 @@
 Small, runnable Python projects for the lecture *Explainability and Interpretability* of the
 course [Machine Learning in Production](https://mlip-cmu.github.io/) (CMU). Each project shows
 one group of techniques with a current tool. You can read everything on GitHub without running
-it: each folder has a short README with the results, and the notebooks are committed with
-their outputs.
+it: each folder has a short README with the results, and a notebook that is committed with
+its outputs.
 
 ## The case study
 
@@ -47,22 +47,6 @@ flowchart LR
     pred -.- p1["04 LIME, SHAP<br/>05 anchors, counterfactuals<br/>06 similar cases<br/>08 context attribution (LLM)"]
 ```
 
-## The figures of the lecture
-
-The plots and tables that the lecture shows are made in the notebooks. Most of them use a
-version of the model with only the age as a feature, so that the whole model is one curve.
-
-| Figure | Where |
-|---|---|
-| Linear model with interaction terms (real COMPAS data) | [`01-interpretable-models/interpretable_models.ipynb`](01-interpretable-models/interpretable_models.ipynb) |
-| Global surrogate: a line through 8 predictions of the model | [`02-global-surrogate/global_surrogate.ipynb`](02-global-surrogate/global_surrogate.ipynb) |
-| Permutation importance: two tables, one column shuffled (real COMPAS data) | [`03-importance-and-pdp/importance_and_pdp.ipynb`](03-importance-and-pdp/importance_and_pdp.ipynb) |
-| One person with different ages: one line of a partial dependence plot | [`03-importance-and-pdp/importance_and_pdp.ipynb`](03-importance-and-pdp/importance_and_pdp.ipynb) |
-| Global surrogate against local surrogates | [`04-lime-and-shap/lime_and_shap.ipynb`](04-lime-and-shap/lime_and_shap.ipynb) |
-| Anchors; counterfactuals with one feature | [`05-counterfactuals/illustration.ipynb`](05-counterfactuals/illustration.ipynb) |
-| Prototypes and criticisms over age and priors | [`06-similarity-and-prototypes/similarity_and_prototypes.ipynb`](06-similarity-and-prototypes/similarity_and_prototypes.ipynb) |
-| Influential instance: one added person | [`07-influential-instances/illustration.ipynb`](07-influential-instances/illustration.ipynb) |
-
 Three terms that are easy to confuse:
 
 - **Feature importance** (03): how much does the model rely on a feature, across all predictions?
@@ -93,7 +77,7 @@ locked dependencies; the first run installs them.
 
 ```sh
 cd 05-counterfactuals
-uv run counterfactuals.py
+uv run jupyter lab anchors_and_counterfactuals.ipynb
 ```
 
 ```sh
@@ -101,4 +85,5 @@ uv run counterfactuals.py
 ./run_all.sh 04-lime-and-shap   # one folder
 ```
 
-The notebooks are plain Jupyter notebooks. `uv run jupyter lab` in a notebook folder opens them.
+The notebooks are plain Jupyter notebooks. `./run_all.sh` executes them and writes the outputs
+into the files.

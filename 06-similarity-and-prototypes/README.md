@@ -43,15 +43,15 @@ the outputs.
 4. **MMD-critic** selects prototypes whose distribution is near the distribution of the data,
    and criticisms where the two differ most (40 lines of NumPy).
 
-- `compas_data_error.py` looks at the real COMPAS data that ProPublica published (7 214
-  defendants), which many papers use as a benchmark. A table of the people by quarter of their
+- [`compas_data_error.ipynb`](compas_data_error.ipynb) looks at the real COMPAS data that ProPublica published (7 214
+  defendants), which many papers use as a benchmark. A chart of the people by quarter of their
   screening shows the problem at once: after 1 April 2014 there are 998 people with a rearrest
   and none without. The two-year filter was applied to one group only. With the same filter
   for both groups, the rearrest rate is 36.2%, not 45.1%
   ([Barenstein 2019](https://arxiv.org/abs/1906.04711)). A model that gets the day of the
   screening as a feature finds the error: its accuracy increases from 0.691 to 0.757, and the
   permutation importance of the day (0.101) is almost that of the priors (0.110). The other
-  scripts in this repository that use the COMPAS data (projects 01 and 03) use the data as
+  notebooks in this repository that use the COMPAS data (projects 01 and 03) use the data as
   published.
 
 ## Tools
@@ -70,5 +70,5 @@ With [uv](https://docs.astral.sh/uv/):
 
 ```sh
 uv run jupyter nbconvert --to notebook --execute --inplace similarity_and_prototypes.ipynb
-uv run compas_data_error.py   # the processing error in the real COMPAS data (needs the network)
+uv run jupyter nbconvert --to notebook --execute --inplace compas_data_error.ipynb   # needs the network
 ```

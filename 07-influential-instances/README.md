@@ -16,7 +16,7 @@ or of the loss on validation data. For some models, e.g. logistic regression, an
 function* gives almost the same number without retraining, from one Hessian matrix and the
 gradient of each row.
 
-Leave one out (`influence.py`):
+Leave one out (`influential_instances.ipynb`):
 
 ```python
 for i in range(len(y)):
@@ -36,32 +36,31 @@ approx_theta = np.linalg.solve(hessian, gradients.T).T  # removing row i changes
 
 ## What the code shows
 
-[`illustration.ipynb`](illustration.ipynb) shows the idea in two pictures, for models with
-only the age as a feature:
+Open [`influential_instances.ipynb`](influential_instances.ipynb) on GitHub to see the outputs.
 
-- One added person (85 years old, rearrested) changes boosted trees: the risk at age 85 is 0.96
-  with the person and 0.15 without. This works only because the person is alone in that region
-  and a leaf may hold one person; with at least 40 people in a leaf the change is 0.13 to 0.15.
-- One wrong record (a 25-year-old entered as 125) changes a linear model from
-  0.63 − 0.0070 · age to 0.45 − 0.0027 · age.
-
-`influence.py`, for a model with all features:
-
-1. The model with the 60 errors against the model on corrected data (see the problem above).
-2. Leave one out: 1 500 models, about 40 seconds.
-3. **Influential is not the same as wrong.** The rows that change the parameters most are
-   correct but unusual, e.g. a 75-year-old who was rearrested, or a person with 18 priors who
-   was not. Only 7 of the top 60 are injected errors. The rows whose removal *improves the
-   validation loss* most are a better list for debugging: 10 of the top 20 are injected errors,
-   and 70% of the `age + 100` rows are in the top 60.
-4. **Influence functions** give the same ranking (correlation 1.000 with leave one out) in
-   about a millisecond.
-5. Without the 60 rows whose removal helps most, the accuracy increases from 0.647 to 0.668
-   (all errors corrected: 0.681).
-6. **Groups hide from this method.** None of the 20 rows with `priors_count + 90` is in the top
-   60. Without one of them, the weight of `priors_count` changes by at most 0.001, because the
-   other 19 hold it in place; the 20 single effects add up to +0.011. Without all 20
-   together, the weight changes by +0.097 and gets its correct sign.
+1. **The idea in two pictures**, for models with only the age as a feature.
+   - One added person (85 years old, rearrested) changes boosted trees: the risk at age 85 is
+     0.96 with the person and 0.15 without. This works only because the person is alone in
+     that region and a leaf may hold one person; with at least 40 people in a leaf the change
+     is 0.13 to 0.15.
+   - One wrong record (a 25-year-old entered as 125) changes a linear model from
+     0.63 − 0.0070 · age to 0.45 − 0.0027 · age.
+2. **The influential rows of a data set with errors**, for a model with all features.
+   - The model with the 60 errors against the model on corrected data (see the problem above).
+   - Leave one out: 1 500 models, about 40 seconds.
+   - **Influential is not the same as wrong.** The rows that change the parameters most are
+     correct but unusual, e.g. a 75-year-old who was rearrested, or a person with 18 priors
+     who was not. Only 7 of the top 60 are injected errors. The rows whose removal *improves
+     the validation loss* most are a better list for debugging: 10 of the top 20 are injected
+     errors, and 70% of the `age + 100` rows are in the top 60.
+   - **Influence functions** give the same ranking (correlation 1.000 with leave one out) in
+     some milliseconds.
+   - Without the 60 rows whose removal helps most, the accuracy increases from 0.647 to 0.668
+     (all errors corrected: 0.681).
+   - **Groups hide from this method.** None of the 20 rows with `priors_count + 90` is in the
+     top 60. Without one of them, the weight of `priors_count` changes by at most 0.001,
+     because the other 19 hold it in place; the 20 single effects add up to +0.011. Without
+     all 20 together, the weight changes by +0.097 and gets its correct sign.
 
 ## Tools
 
@@ -73,9 +72,10 @@ only the age as a feature:
 
 ## Run
 
-With [uv](https://docs.astral.sh/uv/):
+To change the notebook and run it again, with [uv](https://docs.astral.sh/uv/) (about one
+minute):
 
 ```sh
-uv run influence.py   # about 40 seconds
-uv run jupyter nbconvert --to notebook --execute --inplace illustration.ipynb
+uv run jupyter lab influential_instances.ipynb
+uv run jupyter nbconvert --to notebook --execute --inplace influential_instances.ipynb
 ```

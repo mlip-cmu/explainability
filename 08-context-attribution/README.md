@@ -16,7 +16,7 @@ model: one weight per sentence. A sentence with a large weight is one that the a
 on. The method needs the probabilities of the model, not its internals.
 
 How probable is the original answer when the model sees only some of the sentences
-(`context_attribution.py`):
+(`context_attribution.ipynb`):
 
 ```python
 ids = prompt(sentences, question)
@@ -36,8 +36,9 @@ surrogate = Lasso(alpha=0.25).fit(masks.astype(float), scores)
 
 ## What the code shows
 
-`context_attribution.py` (the numbers are from one machine; on a different processor the small
-model can give slightly different words and weights):
+Open [`context_attribution.ipynb`](context_attribution.ipynb) on GitHub to see the outputs. The
+numbers are from one machine; on a different processor the small model can give slightly
+different words and weights.
 
 1. The report, the question "Did the defendant miss court dates in the past?", and the answer
    of the model: yes, "he had missed three hearings last year".
@@ -62,6 +63,8 @@ model can give slightly different words and weights):
   for a laptop CPU; it also makes more errors than a large model.
 - [PyTorch](https://pytorch.org): the tensor library below Transformers (the CPU build).
 - [scikit-learn](https://scikit-learn.org): `Lasso`, the sparse linear model.
+- [Matplotlib](https://matplotlib.org) and [Jupyter](https://jupyter.org): the charts and the
+  notebook.
 - The [context-cite](https://github.com/MadryLab/context-cite) library has the complete method;
   this project implements the idea in about 40 lines.
 
@@ -71,5 +74,5 @@ With [uv](https://docs.astral.sh/uv/). The first run downloads the model (1 GB);
 about 30 seconds on four CPU cores.
 
 ```sh
-uv run context_attribution.py
+uv run jupyter nbconvert --to notebook --execute --inplace context_attribution.ipynb
 ```
